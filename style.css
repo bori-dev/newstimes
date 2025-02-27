@@ -97,11 +97,15 @@
 
   @media (max-width: 768px) {
     #search-input {
-      display: none; 
+      display: inline;
     }
 
     .container {
       max-width: 100%;
       overflow: hidden;
+    }
+
+    .button-style {
+      display: none;
     }
   }

@@ -55,12 +55,11 @@ const getNewsByKeyword = async() => {
 const render = () => {
     const newsHTML = newsList.map(news => ` <div class="row news"> 
             <div class="col-lg-4"> 
-             <img class="news-img-size" src=${news.urlToImage ||
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqEWgS0uxxEYJ0PsOb2OgwyWvC0Gjp8NUdPw&usqp=CAU"}> 
+                  <img class="news-img-size" src="${news.urlToImage || 
+                    'https://wingandaprayer.live/wp-content/uploads/2018/07/no-image-available.jpg'}" onerror="this.onerror=null; this.src='https://wingandaprayer.live/wp-content/uploads/2018/07/no-image-available.jpg';" />
 
-             
-  
             </div>
+
             <div class="col-lg-8"> 
               <h3> ${news.title} </h3>
               <p>     ${
@@ -107,6 +106,7 @@ const openSearchBox = () => {
     inputArea.style.display = 'none'; // 다시 숨기기
 }
 };
+
 
 
 getLatestNews() 
