@@ -1,7 +1,8 @@
 // const API_KEY = `e069d8ca7aec4b55b3b8477a11e2ee2f`
 let newsList=[]
-const menus = document.querySelectorAll(".button-style button") 
+const menus = document.querySelectorAll("#menu-list button") 
 menus.forEach(menu => menu.addEventListener("click", (event) => getNewsByCategory(event)));
+
 
 let url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr`)
 // let url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
@@ -110,4 +111,3 @@ const openSearchBox = () => {
 
 
 getLatestNews() 
-
