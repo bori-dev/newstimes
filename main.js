@@ -1,4 +1,4 @@
-// const API_KEY = `e069d8ca7aec4b55b3b8477a11e2ee2f`
+const API_KEY = `e069d8ca7aec4b55b3b8477a11e2ee2f`
 let newsList=[]
 const menus = document.querySelectorAll("#menu-list button") 
 menus.forEach(menu => menu.addEventListener("click", (event) => getNewsByCategory(event)));
@@ -39,7 +39,7 @@ const getNews = async () => {
 }
 
 const getLatestNews = async () => {
-   // url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
+   //url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
    url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr`);
 
     getNews()
@@ -48,8 +48,10 @@ const getLatestNews = async () => {
 const getNewsByCategory = async (event) => {
    const category = event.target.textContent.trim().toLowerCase();
    console.log(category)
+
+   page = 1; 
     // url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
-     url= new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&category=${category}`)
+    url= new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&category=${category}`)
 
     getNews()
 }
@@ -59,7 +61,7 @@ const getNewsByKeyword = async() => {
     const keyword = document.getElementById("search-input").value;
 
     // url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`)
-      url= new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&q=${keyword}`)
+    url= new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&q=${keyword}`)
 
    getNews()
 }
@@ -124,17 +126,35 @@ const pagiNationRender = () => {
  if(lastPage > totalPages){
   lastPage = totalPages
  }
+
+ 
  const firstPage = lastPage - (groupSize - 1) <=0? 1 : lastPage - (groupSize - 1);
 
- let paginationHTML = `<li class="page-item ${page === 1 ? 'disabled' : ''}" onclick="moveToPage(${page-1})"><a class="page-link">Previous</a></li>`;
+ let paginationHTML = 
+ `<li class="page-item ${page === 1 ? 'disabled' : ''}" onclick="${page === 1 ? '' : 'moveToPage(1)'}">
+ <a class="page-link"> << </a>
+</li>
+<li class="page-item ${page === 1 ? 'disabled' : ''}" onclick="${page === 1 ? '' : `moveToPage(${page - 1})`}">
+ <a class="page-link"><</a>
+</li>`;
+
+   
  for(let i = firstPage; i<=lastPage; i++){
   paginationHTML+= ` <li class="page-item ${i===page? "active" : " "}" onclick = "moveToPage(${i})"><a class="page-link">${i}</a></li>`
  }
 
- paginationHTML+= `<li class="page-item ${page === lastPage ? 'disabled' : ''}"   onclick="moveToPage(${page+1})"><a class="page-link">Next</a></li>`
-  
+ paginationHTML +=
+ `<li class="page-item ${page === lastPage ? 'disabled' : ''}" onclick="${page === lastPage ? '' : `moveToPage(${page + 1})`}">
+    <a class="page-link">></a>
+  </li>
+  <li class="page-item ${page === totalPages ? 'disabled' : ''}" onclick="${page === totalPages ? '' : `moveToPage(${totalPages})`}">
+    <a class="page-link"> >> </a>
+  </li>`;
+
  document.querySelector(".pagination").innerHTML=paginationHTML;
 }
+
+
 
 const moveToPage = (pageNum) => {
   page = pageNum;
